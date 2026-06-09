@@ -27,8 +27,6 @@ React + TailwindCSS + Axios   (Frontend — Vite)
 - ✅ Priority levels with color-coded badges (P1–P5)
 - ✅ Sorting: Newest, Oldest, Priority High→Low, Priority Low→High
 - ✅ Frontend + Backend validation (required fields, email format)
-- ✅ Professional dark glassmorphism UI
-- ✅ Loading states and error handling
 
 ## Setup Instructions
 
