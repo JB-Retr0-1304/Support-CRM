@@ -1,0 +1,47 @@
+"""
+SQLAlchemy ORM models for the Support CRM.
+"""
+
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from datetime import datetime, timezone
+import uuid
+
+from .database import Base
+
+
+def generate_ticket_id():
+    """Generate a unique ticket ID like TKT-XXXXXXXX."""
+    return f"TKT-{uuid.uuid4().hex[:8].upper()}"
+
+
+class Ticket(Base):
+    __tablename__ = "tickets"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    ticket_id = Column(String(20), unique=True, index=True, default=generate_ticket_id)
+    customer_name = Column(String(255), nullable=False)
+    customer_email = Column(String(255), nullable=False)
+    subject = Column(String(500), nullable=False)
+    description = Column(Text, nullable=False)
+    priority = Column(Integer, default=3, nullable=False)  # 1 (Very Low) to 5 (Critical)
+    status = Column(String(50), default="Open", nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc),
+                        onupdate=lambda: datetime.now(timezone.utc))
+
+    # Relationship to notes
+    notes = relationship("Note", back_populates="ticket", cascade="all, delete-orphan",
+                         order_by="Note.created_at.desc()")
+
+
+class Note(Base):
+    __tablename__ = "notes"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    ticket_id = Column(String(20), ForeignKey("tickets.ticket_id"), nullable=False)
+    note_text = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    # Relationship back to ticket
+    ticket = relationship("Ticket", back_populates="notes")
