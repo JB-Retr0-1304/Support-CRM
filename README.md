@@ -28,7 +28,6 @@ React + TailwindCSS + Axios   (Frontend — Vite)
 - ✅ Sorting: Newest, Oldest, Priority High→Low, Priority Low→High
 - ✅ Frontend + Backend validation (required fields, email format)
 - ✅ Professional dark glassmorphism UI
-- ✅ Toast notifications for all actions
 - ✅ Loading states and error handling
 
 ## Setup Instructions
@@ -37,29 +36,11 @@ React + TailwindCSS + Axios   (Frontend — Vite)
 - Python 3.10+
 - Node.js 18+
 
-### Backend
+Live Demo:
+https://support-crm-seven.vercel.app/
 
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-The API will be available at `http://localhost:8000`.
-
-API documentation: `http://localhost:8000/docs` (Swagger UI)
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend will be available at `http://localhost:5173`.
-
-> The Vite dev server proxies `/api` requests to `http://localhost:8000`.
+API Docs:
+https://supportcrmapi.up.railway.app/docs
 
 ## API Endpoints
 
